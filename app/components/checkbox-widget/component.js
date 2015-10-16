@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-    checkedValue: false,
-
-    change: function(event) {
-        console.log('onChange JS Event');
-        this.set('inputCheckbox.checked', false);
+    change: function() {
+        if (!this.get('inputCheckbox.checked')) {
+            if(!confirm('Are you sure that you want to uncheck this?')) {
+                this.set('inputCheckbox.checked', true);
+            }
+        }
         return false;
     }
 });

@@ -42,11 +42,12 @@ define('task-manager-components/components/checkbox-widget/component', ['exports
 
     exports['default'] = Ember['default'].Component.extend({
 
-        checkedValue: false,
-
-        change: function change(event) {
-            console.log('onChange JS Event');
-            this.set('inputCheckbox.checked', false);
+        change: function change() {
+            if (!this.get('inputCheckbox.checked')) {
+                if (!confirm('Are you sure that you want to uncheck this?')) {
+                    this.set('inputCheckbox.checked', true);
+                }
+            }
             return false;
         }
     });
@@ -67,7 +68,7 @@ define('task-manager-components/components/checkbox-widget/template', ['exports'
             "column": 0
           },
           "end": {
-            "line": 2,
+            "line": 4,
             "column": 0
           }
         },
@@ -94,20 +95,13 @@ define('task-manager-components/components/checkbox-widget/template', ['exports'
         return morphs;
       },
       statements: [
-        ["inline","input",[],["viewName","inputCheckbox","type","checkbox"],["loc",[null,[1,0],[1,50]]]],
-        ["content","yield",["loc",[null,[1,50],[1,59]]]]
+        ["inline","input",[],["viewName","inputCheckbox","type","checkbox"],["loc",[null,[1,0],[3,21]]]],
+        ["content","yield",["loc",[null,[3,21],[3,30]]]]
       ],
       locals: [],
       templates: []
     };
   }()));
-
-});
-define('task-manager-components/components/checkbox-widget', ['exports', 'ember'], function (exports, Ember) {
-
-	'use strict';
-
-	exports['default'] = Ember['default'].Component.extend({});
 
 });
 define('task-manager-components/components/task-widget/template', ['exports'], function (exports) {
@@ -386,17 +380,7 @@ define('task-manager-components/tests/components/checkbox-widget/component.jshin
 
   QUnit.module('JSHint - components/checkbox-widget');
   QUnit.test('components/checkbox-widget/component.js should pass jshint', function(assert) { 
-    assert.ok(false, 'components/checkbox-widget/component.js should pass jshint.\ncomponents/checkbox-widget/component.js: line 7, col 22, \'event\' is defined but never used.\n\n1 error'); 
-  });
-
-});
-define('task-manager-components/tests/components/checkbox-widget.jshint', function () {
-
-  'use strict';
-
-  QUnit.module('JSHint - components');
-  QUnit.test('components/checkbox-widget.js should pass jshint', function(assert) { 
-    assert.ok(true, 'components/checkbox-widget.js should pass jshint.'); 
+    assert.ok(true, 'components/checkbox-widget/component.js should pass jshint.'); 
   });
 
 });
@@ -655,7 +639,7 @@ catch(err) {
 if (runningTests) {
   require("task-manager-components/tests/test-helper");
 } else {
-  require("task-manager-components/app")["default"].create({"name":"task-manager-components","version":"0.0.0+7d4d0b93"});
+  require("task-manager-components/app")["default"].create({"name":"task-manager-components","version":"0.0.0+76db00ab"});
 }
 
 /* jshint ignore:end */
